@@ -1,0 +1,12 @@
+
+DOWN = (0, 1)
+LEFT = (-1, 0)
+RIGHT = (0, 1)
+
+UP_RIGHT = (1, -1)
+UP_LEFT = (-1, -1)
+DOWN_RIGHT = (1, 1)
+DOWN_LEFT = (-1, 1)
+
+
+VECTOR_LIST = [DOWN, LEFT, RIGHT, UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT]

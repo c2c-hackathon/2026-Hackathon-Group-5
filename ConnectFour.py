@@ -1,5 +1,6 @@
 import typing
 from Colors import *
+from Vectors import *
 import time
 from NeoTrellisGame import NeoTrellisGame, AbstractNeoTrellisGame, Action
 from adafruit_neotrellis.multitrellis import MultiTrellis
@@ -74,16 +75,19 @@ class ConnectFour:
         row = self.find_lowest_empty_row(col)
         if row != -1:
             self.game_state[row][col] = self.current_player
+            self.board.play_sound("clack.mp3")
             self.update_board_colors()
+            game_over = self.check_win(col, row)
+            print(game_over)
             self.switch_player()
         else:
-            NeoTrellis.play_sound(clack.mp3)
-        print(self.get_direction(col, row, 1, 0))
+            pass
+        
 
 
     def update_board_colors(self):
         for row in range(NUM_ROWS):
-            for col in range():
+            for col in range(NUM_COLS):
                 player = self.game_state[row][col]
                 if player ==1:
                     self.board.set_cell_color(col, row+2,self.player_one_color)
@@ -131,42 +135,78 @@ class ConnectFour:
 
     def get_player_color(self, player) -> tuple[int, int, int]:
         #TODO: Return the color for the given player 
-        pass
+        if self.current_player == 1:
+            return self.player_one_color
+        return self.player_two_color
+
 
     def is_column_full(self, col: int):
         #TODO: Return if the given column is currently full
         return (self.game_state[0][col] != 0)
 
-    def get_direction(self, col: int, row: int, delta_x: int, delta_y: int):
+    def get_cell(self, col: int, row: int, vector: tuple[int,int]):
+        # row is y, col is x
+        # row increases down and decreases up
+        # col increases right and decreases left
+        # tuple = (delta_col: int, delta_row: int)
+        # self.game_state[row][col]
         try:
-            return self.game_state[row + delta_y][col + delta_x] == self.current_player
+            print("tried")
+            return self.game_state[row + vector[1]][col + vector[0]] == self.current_player
         except Exception:
+            print("failed")
             return False
 
-    
+    def get_direction(self, col: int, row: int, vector: tuple[int, int], length: int = 3):
+        for i in range(1, length+1):
+            cell_is_same = self.get_cell(col, row, (vector[0]*i, vector[1]*i))
+            if cell_is_same == False:
+                break
+            if i == 3:
+                return True
+        for i in range(1, length+1):
+            cell_is_same = self.get_cell(col-vector[0], row-vector[1], (vector[0]*i, vector[1]*i))
+            if cell_is_same == False:
+                break
+            if i == 3:
+                return True
+        
+            print("True: " + str(i + 1))
+        return True
+
+
     def check_win(self, col: int, row:int):
         #TODO: Check the game state to see if any player has won or if there is a draw
-        
+        for vector in VECTOR_LIST:
+            win = self.get_direction(col, row, vector, 3)
+            if win:
+                self.show_winner()
+                return True
+        return False
         # Check win from top
-        if row <= 2:
-            if self.game_state[row+1][col] == self.current_player:
-                if self.game_state[row+2][col] == self.current_player:
-                    if self.game_state[row+3][col] == self.current_player:
-                        return True
-        pass
+        # print("To the right: " + str(self.get_cell(col, row, 1, 0)))
+        # print("To the left: " + str(self.get_cell(col, row, -1, 0)))
+        # print("Up: " + str(self.get_cell(col, row, 0, -1)))
+        # print("Down: " + str(self.get_cell(col, row, 0, 1)))
+        
 
     def show_winner(self):
+        print("\n\n\nWin")
+        print(self.get_player_color(self.current_player))
+        self.board.play_sound("cheer.mp3")
         for i in range(4):
-            same_color()
+            self.set_full_color(self.get_player_color(self.current_player))
             time.sleep(.5)
-            clear_board()
+            self.set_full_color((255, 255, 255))
             time.sleep(.5)
-            
+        #self.reset_game()
+    
 
-    def same_color(self):
-        for row in range(NUM_ROWS):
-            for col in range(NUM_COLS):
-                self.board.set_cell_color(col, row,get_player_color(self.current_player))
+    def set_full_color(self, color):
+        for row in range(8):
+            for col in range(8):
+                print(col, row)
+                self.board.set_cell_color(col, row, color)
 
     def show_tie_game(self):
         #TODO: Display on the board that there was a draw
