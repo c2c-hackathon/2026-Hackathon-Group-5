@@ -9,7 +9,7 @@ class ConnectFour:
         self.board = board if board is not None else NeoTrellisGame()
         super().__init__()
         self.game_state = [
-            [a,0,0,0,0,0,0],
+            [1,0,0,0,0,0,0],
             [0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0],
@@ -17,6 +17,7 @@ class ConnectFour:
             [0,0,0,0,0,0,0],
         ] 
         a=GREEN #TODO: Choose a structure to represent what pieces are currently in the game board
+
 
     def reset_game(self):
         #TODO reset the game state to its original empty state
@@ -49,6 +50,15 @@ class ConnectFour:
         self.board.update_display()        
 
     def update_board_colors(self):
+        for row in range(len(self.game_state)):
+            for col in len(self.game_state[row]):
+                player = self.game_state[row][column]
+                if player ==1:
+                    self.board.set_cell_color = RED
+                elif player ==2:
+                    self.board.set_cell_color = YELLOW
+
+                
         #TODO: Take the current game state and update the board colors accordingly. Hint: look at NeoTrellisGame.py for functions to update the colors and display the colors
         pass
 
