@@ -71,9 +71,14 @@ class ConnectFour:
 
     def place_piece(self, col: int):
         #TODO: Finds the legal move in the column, and updates the game state to reflect the new piece, checking to see if a player has won with that new piece. Don't forget to play a sound!
-        row = self.find_lowest_empty_row(col)
-        if row != -1:
+        end_row = self.find_lowest_empty_row(col)
+        initial_row = 2
+        if end_row != -1:
             self.game_state[row][col] = self.current_player
+            for i in range(end_row-initial_row):
+                self.board.set_cell_color(col, end_row,self.current_player)
+                initial_row+=1
+                
             self.update_board_colors()
             self.switch_player()
         else:
