@@ -1,7 +1,7 @@
 
 DOWN = (0, 1)
 LEFT = (-1, 0)
-RIGHT = (0, 1)
+RIGHT = (1, 0)
 
 UP_RIGHT = (1, -1)
 UP_LEFT = (-1, -1)

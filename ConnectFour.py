@@ -85,15 +85,15 @@ class ConnectFour:
                 self.board.set_cell_color(col, current_row,self.get_player_color(self.current_player))
                 self.board.update_display()
                 current_row += 1
-                time.sleep(0.05)
+                time.sleep(0.03)
 
             self.game_state[end_row][col] = self.current_player
             self.update_board_colors()
+            self.board.play_sound("clack.mp3")
             self.check_win(col, end_row)
             self.switch_player()
         else:
             NeoTrellis.play_sound("err.mp3")
-        print(self.get_direction(col, end_row, 1, 0))
 
 
     def update_board_colors(self):
@@ -164,10 +164,8 @@ class ConnectFour:
         # tuple = (delta_col: int, delta_row: int)
         # self.game_state[row][col]
         try:
-            print("tried")
             return self.game_state[row + vector[1]][col + vector[0]] == self.current_player
         except Exception:
-            print("failed")
             return False
 
     def get_direction(self, col: int, row: int, vector: tuple[int, int], length: int = 3):
@@ -177,13 +175,15 @@ class ConnectFour:
                 break
             if i == 3:
                 return True
-        """for i in range(1, length+2):
-            cell_is_same = self.get_cell(col-vector[0], row-vector[1], (vector[0]*i, vector[1]*i))
-            if cell_is_same == False:
-                break
-            if i == 3:
-                return True
-        """
+        for j in range(4):
+            for i in range(1, length+1):
+                cell_is_same = self.get_cell(col + vector[0]*j, row + vector[1]*j, (vector[0]*i, vector[1]*i))
+                if cell_is_same == False:
+                    break
+                print(i)
+                if i == 4:
+                    return True
+        
         #print("True: " + str(i + 1))
         return False
 
@@ -203,7 +203,8 @@ class ConnectFour:
         
 
     def show_winner(self):
-        for i in range(4):
+        self.board.play_sound("cheer.mp3")
+        for i in range(3):
             self.set_full_color(self.get_player_color(self.current_player))
             time.sleep(.5)
             self.board.update_display()
