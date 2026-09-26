@@ -35,12 +35,13 @@ class ConnectFour:
             for i in range(NUM_COLS):
                 row.append(0)
             self.game_state.append(row)
-        """
-        for col in range(8):
-            self.set
         
-                self.board.update_display()
-                """
+        for col in range(8):
+            self.board.set_cell_color(col, 1, OFF)
+    
+        
+        self.board.update_display()
+                
         #TODO reset the game state to its original empty state
         pass
 
@@ -81,7 +82,7 @@ class ConnectFour:
         if end_row != -1:
             for i in range(end_row):
                 self.update_board_colors()
-                self.board.set_cell_color(col, end_row,self.get_player_color(self.current_player))
+                self.board.set_cell_color(col, current_row,self.get_player_color(self.current_player))
                 self.board.update_display()
                 current_row += 1
                 time.sleep(0.05)
@@ -176,15 +177,15 @@ class ConnectFour:
                 break
             if i == 3:
                 return True
-        for i in range(1, length+1):
+        """for i in range(1, length+2):
             cell_is_same = self.get_cell(col-vector[0], row-vector[1], (vector[0]*i, vector[1]*i))
             if cell_is_same == False:
                 break
             if i == 3:
                 return True
-        
-            print("True: " + str(i + 1))
-        return True
+        """
+        #print("True: " + str(i + 1))
+        return False
 
 
     def check_win(self, col: int, row:int):
