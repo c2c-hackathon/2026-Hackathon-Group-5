@@ -61,6 +61,7 @@ class ConnectFour:
                 row -= 1
             else:
                 return row
+        
 
         return -1
 
@@ -117,7 +118,11 @@ class ConnectFour:
 
     def is_board_full(self):
         #TODO: Return whether or not the game state has no more legal moves
-        pass  
+        full = 0
+        for col in range(len(self.game_state[0])):
+            if not is_column_full(col):
+                return False
+        return True
 
     def get_player_color(self, player) -> tuple[int, int, int]:
         #TODO: Return the color for the given player 
