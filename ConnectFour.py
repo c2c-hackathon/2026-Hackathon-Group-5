@@ -9,16 +9,26 @@ class ConnectFour:
         self.board = board if board is not None else NeoTrellisGame()
         super().__init__()
         self.game_state = [
-            [a,0,0,0,0,0,0],
             [0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+
         ] 
+
+        for x in range(7):
+            self.board.set_callback(x,0, self.handle_button_event)
+            self.board.activate_key(x,0, Action.BUTTON_PRESSED)
+
+    
         a=GREEN #TODO: Choose a structure to represent what pieces are currently in the game board
 
     def reset_game(self):
+
+            
+
         #TODO reset the game state to its original empty state
         pass
 
@@ -34,18 +44,20 @@ class ConnectFour:
         This is an example of how a callback function will look. It takes an x value, y value, and action, which will indicate what button activated the callback and what action the user did to run it.
         See NeoTrellisGame.set_callback() for info about callbacks.
         """
-        self.board.set_cell_color(0,0,[255,255,255])
-        self.board.update_display() 
+        if action == NeoTrellis.EDGE_RISING:
+            self.place_piece(x)
+
         #TODO: Implement what will happen when the button at position x,y is pressed or released
   
 
     def find_lowest_empty_row(self, col: int):
         #TODO: Return the lowest empty row in the column.
-        pass
+
+        return 5
 
     def place_piece(self, col: int):
         #TODO: Finds the legal move in the column, and updates the game state to reflect the new piece, checking to see if a player has won with that new piece. Don't forget to play a sound!
-        self.board.set_cell_color(0,0,[255,255,255])
+        self.board.set_cell_color(col,self.find_lowest_empty_row(col),GREEN)
         self.board.update_display()        
 
     def update_board_colors(self):
