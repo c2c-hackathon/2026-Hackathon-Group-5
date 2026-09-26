@@ -125,14 +125,18 @@ class ConnectFour:
     def show_current_player(self):
         #TODO: Function to indicate on the board which player is currently placing a piece
         for col in range(NUM_COLS):
+            time.sleep(0.01)
             if self.is_column_full(col):
                 self.board.set_cell_color(col, 0,OFF)
+                self.board.update_display()
                 #self.board.activate_key(col,0, Action.BUTTON_PRESSED, False)
             elif self.current_player == 1:
                 self.board.set_cell_color(col, 0,self.player_one_color)
+                self.board.update_display()
             elif self.current_player == 2:
                 self.board.set_cell_color(col, 0,self.player_two_color)
-        self.board.update_display()
+                self.board.update_display()
+        
 
     def is_board_full(self):
         #TODO: Return whether or not the game state has no more legal moves
@@ -151,8 +155,7 @@ class ConnectFour:
     def is_column_full(self, col: int):
         #TODO: Return if the given column is currently full
         column_full = self.game_state[0][col] != 0
-        if column_full:
-            self.board.play_sound("aww.mp3")
+
 
         return column_full
 
