@@ -82,7 +82,7 @@ class ConnectFour:
 
     def update_board_colors(self):
         for row in range(NUM_ROWS):
-            for col in range():
+            for col in range(NUM_COLS):
                 player = self.game_state[row][col]
                 if player ==1:
                     self.board.set_cell_color(col, row+2,self.player_one_color)
