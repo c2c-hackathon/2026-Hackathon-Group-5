@@ -5,6 +5,7 @@ Colors are a tuple in the form of (R, G, B), with R, G, and B ranging from [0, 2
 """
 
 RED = (255, 40 , 40)
+YELLOW = (255,255, 0)
 GREEN = (40, 255, 40)
 BLUE = (40, 40, 255)
 ORANGE = (242, 140, 40)
