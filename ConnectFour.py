@@ -161,21 +161,30 @@ class ConnectFour:
     def get_direction(self, col: int, row: int, vector: tuple[int, int], length: int = 3):
         # Calls get_cell to see if there is a 4 in a row with the given direction, then returns that
         # Used for win logic.
-        for i in range(1, length+1):
-            cell_is_same = self.get_cell(col, row, (vector[0]*i, vector[1]*i))
-            if cell_is_same == False:
-                break
-            if i == 3:
-                return True
-        for j in range(4):
-            for i in range(1, length+1):
-                cell_is_same = self.get_cell(col + vector[0]*j, row + vector[1]*j, (vector[0]*i, vector[1]*i))
-                if cell_is_same == False:
-                    break
-                print(i)
-                if i == 4:
-                    return True
-        
+        for i in range(4):
+            new_col = col
+            new_row = row + i
+            if self.get_cell(new_col, new_row, (0, 0)):
+                if self.get_cell(new_col, new_row, (vector[0], vector[1])):
+                    if self.get_cell(new_col, new_row, (vector[0] * 2, vector[1]*2)):
+                        if self.get_cell(new_col, new_row, (vector[0]*3, vector[1]*3)):
+                            return True
+        for i in range(4):
+            new_col = col + i
+            new_row = row
+            if self.get_cell(new_col, new_row, (0, 0)):
+                if self.get_cell(new_col, new_row, (vector[0], vector[1])):
+                    if self.get_cell(new_col, new_row, (vector[0] * 2, vector[1]*2)):
+                        if self.get_cell(new_col, new_row, (vector[0]*3, vector[1]*3)):
+                            return True
+        for i in range(4):
+            new_col = col + i
+            new_row = row + i
+            if self.get_cell(new_col, new_row, (0, 0)):
+                if self.get_cell(new_col, new_row, (vector[0], vector[1])):
+                    if self.get_cell(new_col, new_row, (vector[0] * 2, vector[1]*2)):
+                        if self.get_cell(new_col, new_row, (vector[0]*3, vector[1]*3)):
+                            return True
         return False
 
 
