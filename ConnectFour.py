@@ -33,9 +33,10 @@ class ConnectFour:
         This is an example of how a callback function will look. It takes an x value, y value, and action, which will indicate what button activated the callback and what action the user did to run it.
         See NeoTrellisGame.set_callback() for info about callbacks.
         """
+        self.board.set_cell_color(0,0,[255,255,255])
+        self.board.update_display() 
         #TODO: Implement what will happen when the button at position x,y is pressed or released
   
-        pass
 
     def find_lowest_empty_row(self, col: int):
         #TODO: Return the lowest empty row in the column.
@@ -43,7 +44,8 @@ class ConnectFour:
 
     def place_piece(self, col: int):
         #TODO: Finds the legal move in the column, and updates the game state to reflect the new piece, checking to see if a player has won with that new piece. Don't forget to play a sound!
-        pass
+        self.board.set_cell_color(0,0,[255,255,255])
+        self.board.update_display()        
 
     def update_board_colors(self):
         #TODO: Take the current game state and update the board colors accordingly. Hint: look at NeoTrellisGame.py for functions to update the colors and display the colors
