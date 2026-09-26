@@ -1,10 +1,14 @@
 import typing
 from Colors import *
+import time
 from NeoTrellisGame import NeoTrellisGame, AbstractNeoTrellisGame, Action
 from adafruit_neotrellis.multitrellis import MultiTrellis
 from adafruit_neotrellis.neotrellis import NeoTrellis
-
+NUM_ROWS = 6
+NUM_COLS = 8
 class ConnectFour:
+    
+    
     def __init__(self, board: typing.Optional[AbstractNeoTrellisGame] = None):
         self.board = board if board is not None else NeoTrellisGame()
         super().__init__()
@@ -12,7 +16,7 @@ class ConnectFour:
         self.current_player = 1
         self.player_one_color = RED
         self.player_two_color = YELLOW
-        for x in range(8):
+        for x in range(NUM_COLS):
             self.board.set_callback(x,0, self.handle_button_event)
             self.board.activate_key(x,0, Action.BUTTON_PRESSED)
         self.update_board_colors()
@@ -23,14 +27,14 @@ class ConnectFour:
 
 
     def reset_game(self):
-        self.game_state = [
-            [0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0],
-        ] 
+
+        self.game_state = []
+        for i in range(NUM_ROWS):
+            row = []
+            for i in range(NUM_COLS):
+                row.append(0)
+            self.game_state.append(row)
+        
 
         #TODO reset the game state to its original empty state
         pass
@@ -55,7 +59,7 @@ class ConnectFour:
 
     def find_lowest_empty_row(self, col: int):
         #TODO: Return the lowest empty row in the column.
-        row = len(self.game_state)-1
+        row = NUM_ROWS-1
         while row>=0:
             if self.game_state[row][col] != 0:
                 row -= 1
@@ -78,8 +82,8 @@ class ConnectFour:
 
 
     def update_board_colors(self):
-        for row in range(6):
-            for col in range(8):
+        for row in range(NUM_ROWS):
+            for col in range():
                 player = self.game_state[row][col]
                 if player ==1:
                     self.board.set_cell_color(col, row+2,self.player_one_color)
@@ -104,7 +108,7 @@ class ConnectFour:
     
     def show_current_player(self):
         #TODO: Function to indicate on the board which player is currently placing a piece
-        for col in range(len(self.game_state[2])):
+        for col in range(NUM_COLS):
             if self.is_column_full(col):
                 self.board.set_cell_color(col, 0,OFF)
                 #self.board.activate_key(col,0, Action.BUTTON_PRESSED, False)
@@ -120,7 +124,7 @@ class ConnectFour:
     def is_board_full(self):
         #TODO: Return whether or not the game state has no more legal moves
         full = 0
-        for col in range(len(self.game_state[0])):
+        for col in range(NUM_COLS):
             if not is_column_full(col):
                 return False
         return True
@@ -152,8 +156,17 @@ class ConnectFour:
         pass
 
     def show_winner(self):
-        #TODO: Display on the board who won
-        pass
+        for i in range(4):
+            same_color()
+            time.sleep(.5)
+            clear_board()
+            time.sleep(.5)
+            
+
+    def same_color(self):
+        for row in range(NUM_ROWS):
+            for col in range(NUM_COLS):
+                self.board.set_cell_color(col, row,get_player_color(self.current_player))
 
     def show_tie_game(self):
         #TODO: Display on the board that there was a draw
