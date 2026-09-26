@@ -23,11 +23,12 @@ class ConnectFour:
         self.update_board_colors()
         self.show_current_player()
 
-    
-        a=GREEN #TODO: Choose a structure to represent what pieces are currently in the game board
 
 
     def reset_game(self):
+        """
+        Cleans the board by turnning all lights off and reset the game state.
+        """
 
         self.game_state = []
         for i in range(NUM_ROWS):
@@ -42,15 +43,6 @@ class ConnectFour:
         
         self.board.update_display()
                 
-        #TODO reset the game state to its original empty state
-        pass
-
-    def register_callbacks(self):
-        #TODO: Register callbacks that will be run when buttons are pressed and released
-        self.board.set_callback(0, 0, self.handle_button_event) # Example of how to register a callback (function) for button 0, 0. Must be done for every button that runs a function
-        self.board.activate_key(0, 0, Action.BUTTON_PRESSED) # Even though the callback is set, if the key is not enabled it will not be run. This is how you enable
-
-        pass
   
     def handle_button_event(self, x:int, y: int, action: Action):
         """
@@ -60,11 +52,9 @@ class ConnectFour:
         if action == NeoTrellis.EDGE_RISING:
             self.place_piece(x)
 
-        #TODO: Implement what will happen when the button at position x,y is pressed or released
   
 
     def find_lowest_empty_row(self, col: int):
-        #TODO: Return the lowest empty row in the column.
         row = NUM_ROWS-1
         while row>=0:
             if self.game_state[row][col] != 0:
