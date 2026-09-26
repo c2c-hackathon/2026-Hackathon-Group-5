@@ -14,3 +14,4 @@ while True:
         connect_four.board.clear_board()
         exit()  # quit
 
+#test
