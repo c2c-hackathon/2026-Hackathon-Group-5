@@ -21,6 +21,7 @@ class ConnectFour:
         for x in range(7):
             self.board.set_callback(x,0, self.handle_button_event)
             self.board.activate_key(x,0, Action.BUTTON_PRESSED)
+        self.update_board_colors()
 
     
         a=GREEN #TODO: Choose a structure to represent what pieces are currently in the game board
@@ -53,6 +54,8 @@ class ConnectFour:
 
     def find_lowest_empty_row(self, col: int):
         #TODO: Return the lowest empty row in the column.
+        #for col in len(self.game_state[row][col]):
+                #pass
 
         return 5
 
@@ -63,12 +66,15 @@ class ConnectFour:
 
     def update_board_colors(self):
         for row in range(len(self.game_state)):
-            for col in len(self.game_state[row]):
-                player = self.game_state[row][column]
+            for col in range(len(self.game_state[row])):
+                player = self.game_state[row][col]
                 if player ==1:
-                    self.board.set_cell_color = RED
+                    self.board.set_cell_color(row,col,RED)
                 elif player ==2:
-                    self.board.set_cell_color = YELLOW
+                    self.board.set_cell_color(row, col,YELLOW)
+                else:
+                    self.board.set_cell_color(row,col,OFF)
+        self.board.update_display()
 
                 
         #TODO: Take the current game state and update the board colors accordingly. Hint: look at NeoTrellisGame.py for functions to update the colors and display the colors
