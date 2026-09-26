@@ -35,8 +35,12 @@ class ConnectFour:
             for i in range(NUM_COLS):
                 row.append(0)
             self.game_state.append(row)
+        """
+        for col in range(8):
+            self.set
         
-
+                self.board.update_display()
+                """
         #TODO reset the game state to its original empty state
         pass
 
@@ -73,20 +77,22 @@ class ConnectFour:
     def place_piece(self, col: int):
         #TODO: Finds the legal move in the column, and updates the game state to reflect the new piece, checking to see if a player has won with that new piece. Don't forget to play a sound!
         end_row = self.find_lowest_empty_row(col)
-        initial_row = 2
+        current_row = 2
         if end_row != -1:
-            self.game_state[initial_row][col] = self.current_player
-            for i in range(end_row-initial_row):
-                self.board.set_cell_color(col, end_row,self.current_player)
-                initial_row+=1
-                
+            for i in range(end_row):
+                self.update_board_colors()
+                self.board.set_cell_color(col, end_row,self.get_player_color(self.current_player))
+                self.board.update_display()
+                current_row += 1
+                time.sleep(0.05)
+
+            self.game_state[end_row][col] = self.current_player
             self.update_board_colors()
-            game_over = self.check_win(col, row)
-            print(game_over)
+            self.check_win(col, end_row)
             self.switch_player()
         else:
-            NeoTrellis.play_sound(clack.mp3)
-        print(self.get_direction(col, row, 1, 0))
+            NeoTrellis.play_sound("err.mp3")
+        print(self.get_direction(col, end_row, 1, 0))
 
 
     def update_board_colors(self):
@@ -187,8 +193,7 @@ class ConnectFour:
             win = self.get_direction(col, row, vector, 3)
             if win:
                 self.show_winner()
-                return True
-        return False
+                return
         # Check win from top
         # print("To the right: " + str(self.get_cell(col, row, 1, 0)))
         # print("To the left: " + str(self.get_cell(col, row, -1, 0)))
@@ -200,15 +205,18 @@ class ConnectFour:
         for i in range(4):
             self.set_full_color(self.get_player_color(self.current_player))
             time.sleep(.5)
+            self.board.update_display()
             self.set_full_color((255, 255, 255))
             time.sleep(.5)
-        #self.reset_game()
+            self.board.update_display()
+        self.reset_game()
+        self.update_board_colors()
+
     
 
     def set_full_color(self, color):
         for row in range(8):
             for col in range(8):
-                print(col, row)
                 self.board.set_cell_color(col, row, color)
 
     def show_tie_game(self):
