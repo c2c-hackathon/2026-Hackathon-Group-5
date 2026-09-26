@@ -147,8 +147,6 @@ class ConnectFour:
     def is_column_full(self, col: int):
         # Returns whether or not the column is full
         column_full = self.game_state[0][col] != 0
-        if column_full:
-            self.board.play_sound("aww.mp3")
 
         return column_full
 
