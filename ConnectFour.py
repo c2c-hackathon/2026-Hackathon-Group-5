@@ -55,10 +55,14 @@ class ConnectFour:
 
     def find_lowest_empty_row(self, col: int):
         #TODO: Return the lowest empty row in the column.
-        #for col in len(self.game_state[row][col]):
-                #pass
+        row = len(self.game_state)-1
+        while row>=0:
+            if self.game_state[row][col] != 0:
+                row -= 1
+            else:
+                return row
 
-        return 5
+        return -1
 
     def place_piece(self, col: int):
         #TODO: Finds the legal move in the column, and updates the game state to reflect the new piece, checking to see if a player has won with that new piece. Don't forget to play a sound!
