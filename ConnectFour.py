@@ -74,6 +74,7 @@ class ConnectFour:
             self.switch_player()
         else:
             NeoTrellis.play_sound(clack.mp3)
+        print(self.get_direction(col, row, 1, 0))
 
 
     def update_board_colors(self):
@@ -103,7 +104,7 @@ class ConnectFour:
     
     def show_current_player(self):
         #TODO: Function to indicate on the board which player is currently placing a piece
-        for col in range(8):
+        for col in range(len(self.game_state[2])):
             if self.is_column_full(col):
                 self.board.set_cell_color(col, 0,OFF)
                 #self.board.activate_key(col,0, Action.BUTTON_PRESSED, False)
@@ -132,12 +133,22 @@ class ConnectFour:
         #TODO: Return if the given column is currently full
         return (self.game_state[0][col] != 0)
 
+    def get_direction(self, col: int, row: int, delta_x: int, delta_y: int):
+        try:
+            return self.game_state[row + delta_y][col + delta_x] == self.current_player
+        except Exception:
+            return False
+
+    
     def check_win(self, col: int, row:int):
         #TODO: Check the game state to see if any player has won or if there is a draw
-        """if row <= 2:
-            if self.game_state[row+1][col] == self.current_player and self.game_state[row+2][col] == 0 and self.game_state[row+3][col] == 0:
-                return True
-        """
+        
+        # Check win from top
+        if row <= 2:
+            if self.game_state[row+1][col] == self.current_player:
+                if self.game_state[row+2][col] == self.current_player:
+                    if self.game_state[row+3][col] == self.current_player:
+                        return True
         pass
 
     def show_winner(self):
