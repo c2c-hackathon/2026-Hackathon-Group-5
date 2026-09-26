@@ -8,15 +8,7 @@ class ConnectFour:
     def __init__(self, board: typing.Optional[AbstractNeoTrellisGame] = None):
         self.board = board if board is not None else NeoTrellisGame()
         super().__init__()
-        self.game_state = [
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-
-        ] 
+        self.reset_board()
 
         for x in range(7):
             self.board.set_callback(x,0, self.handle_button_event)
@@ -28,8 +20,14 @@ class ConnectFour:
 
 
     def reset_game(self):
-
-            
+        self.game_state = [
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+        ] 
 
         #TODO reset the game state to its original empty state
         pass
@@ -61,8 +59,9 @@ class ConnectFour:
 
     def place_piece(self, col: int):
         #TODO: Finds the legal move in the column, and updates the game state to reflect the new piece, checking to see if a player has won with that new piece. Don't forget to play a sound!
-        self.board.set_cell_color(col,self.find_lowest_empty_row(col),GREEN)
-        self.board.update_display()        
+        row = self.find_lowest_empty_row(col)
+        self.board.set_cell_color(col,row,GREEN)
+        self.board.update_display()
 
     def update_board_colors(self):
         for row in range(len(self.game_state)):
