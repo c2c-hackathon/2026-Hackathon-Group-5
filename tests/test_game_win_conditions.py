@@ -257,7 +257,7 @@ def test___three_diagonal_pieces___supported_column_pressed___diagonal_win_is_de
     expected_column,
 ):
     game, board = game_and_board
-    current_player = replay_moves(connect_four_module, board, moves)
+    x, y, current_player = replay_moves(connect_four_module, board, moves)
     assert_game_is_active(connect_four_module, board)
 
     board.press(move_column, 0)

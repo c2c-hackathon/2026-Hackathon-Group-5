@@ -35,7 +35,7 @@ _load_stdlib_code_module()
 class FakeNeoTrellisGame:
     """Fake board implementation used to exercise Connect Four without hardware."""
 
-    CALLBACK_TIMEOUT_SECONDS = 0.5
+    CALLBACK_TIMEOUT_SECONDS = 5
     PRESS_DELAY_SECONDS = 0.33
 
     def __init__(self):

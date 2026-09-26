@@ -24,10 +24,13 @@ class ConnectFour:
         self.update_board_colors()
         self.show_current_player()
 
-    
+
 
     def reset_game(self):
-        # Resets the game to its default state
+        """
+        Cleans the board by turnning all lights off and reset the game state.
+        """
+
         self.game_state = []
         for i in range(NUM_ROWS):
             row = []
@@ -41,11 +44,6 @@ class ConnectFour:
         
         self.board.update_display()
                 
-        
-    def register_callbacks(self):
-        self.board.set_callback(0, 0, self.handle_button_event) # Example of how to register a callback (function) for button 0, 0. Must be done for every button that runs a function
-        self.board.activate_key(0, 0, Action.BUTTON_PRESSED) # Even though the callback is set, if the key is not enabled it will not be run. This is how you enable
-
   
     def handle_button_event(self, x:int, y: int, action: Action):
         """
