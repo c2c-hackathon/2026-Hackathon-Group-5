@@ -24,12 +24,12 @@ class ConnectFour:
 
     def reset_game(self):
         self.game_state = [
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0],
         ] 
 
         #TODO reset the game state to its original empty state
@@ -67,9 +67,12 @@ class ConnectFour:
     def place_piece(self, col: int):
         #TODO: Finds the legal move in the column, and updates the game state to reflect the new piece, checking to see if a player has won with that new piece. Don't forget to play a sound!
         row = self.find_lowest_empty_row(col)
-        # self.board.set_cell_color(col,row,GREEN)
-        self.game_state[row][col] = self.current_player
-        self.update_board_colors()
+        if row != -1:
+            self.game_state[row][col] = self.current_player
+            self.update_board_colors()
+            self.switch_player()
+        else:
+            NeoTrellis.play_sound(clack.mp3)
 
 
     def update_board_colors(self):
@@ -90,10 +93,11 @@ class ConnectFour:
 
     def switch_player(self):
         #TODO: Change which player is curently placing a piece. Keep track of this in some sort of variable
-        if current_player == 1:
-            current_player = 2
-        elif current_player == 2:
-            current_player = 1
+        if self.current_player == 1:
+            self.current_player = 2
+        elif self.current_player == 2:
+            self.current_player = 1
+        self.show_current_player()
 
     
     def show_current_player(self):
@@ -101,6 +105,7 @@ class ConnectFour:
         for col in range(8):
             if self.is_column_full(col):
                 self.board.set_cell_color(col, 0,OFF)
+                #self.board.activate_key(col,0, Action.BUTTON_PRESSED, False)
             elif self.current_player == 1:
                 self.board.set_cell_color(col, 0,self.player_one_color)
             elif self.current_player == 2:
@@ -122,8 +127,12 @@ class ConnectFour:
         #TODO: Return if the given column is currently full
         return (self.game_state[0][col] != 0)
 
-    def check_win(self):
+    def check_win(self, col: int, row:int):
         #TODO: Check the game state to see if any player has won or if there is a draw
+        """if row <= 2:
+            if self.game_state[row+1][col] == self.current_player and self.game_state[row+2][col] == 0 and self.game_state[row+3][col] == 0:
+                return True
+        """
         pass
 
     def show_winner(self):
