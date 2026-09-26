@@ -82,7 +82,7 @@ class ConnectFour:
             self.update_board_colors()
             self.switch_player()
         else:
-            self.board.play_sound(clack.mp3)
+            self.board.play_sound("clack.mp3")
 
 
     def update_board_colors(self):
@@ -137,7 +137,7 @@ class ConnectFour:
         #TODO: Return if the given column is currently full
         column_full = self.game_state[0][col] != 0
         if column_full:
-            self.board.play_sound(aww.mp3)
+            self.board.play_sound("aww.mp3")
 
         return column_full
 
