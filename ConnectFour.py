@@ -136,12 +136,24 @@ class ConnectFour:
 
         return column_full
 
+        return (self.game_state[0][col] != 0)
+
+    def get_direction(self, col: int, row: int, delta_x: int, delta_y: int):
+        try:
+            return self.game_state[row + delta_y][col + delta_x] == self.current_player
+        except Exception:
+            return False
+
+    
     def check_win(self, col: int, row:int):
         #TODO: Check the game state to see if any player has won or if there is a draw
-        """if row <= 2:
-            if self.game_state[row+1][col] == self.current_player and self.game_state[row+2][col] == 0 and self.game_state[row+3][col] == 0:
-                return True
-        """
+        
+        # Check win from top
+        if row <= 2:
+            if self.game_state[row+1][col] == self.current_player:
+                if self.game_state[row+2][col] == self.current_player:
+                    if self.game_state[row+3][col] == self.current_player:
+                        return True
         pass
 
     def show_winner(self):
