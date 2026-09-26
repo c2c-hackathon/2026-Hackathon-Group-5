@@ -77,7 +77,7 @@ class ConnectFour:
             self.update_board_colors()
             self.switch_player()
         else:
-            NeoTrellis.play_sound(clack.mp3)
+            self.board.play_sound(clack.mp3)
 
 
     def update_board_colors(self):
@@ -117,12 +117,8 @@ class ConnectFour:
                 self.board.set_cell_color(col, 0,self.player_two_color)
         self.board.update_display()
 
-
-
-
     def is_board_full(self):
         #TODO: Return whether or not the game state has no more legal moves
-        full = 0
         for col in range(NUM_COLS):
             if not is_column_full(col):
                 return False
@@ -134,7 +130,11 @@ class ConnectFour:
 
     def is_column_full(self, col: int):
         #TODO: Return if the given column is currently full
-        return (self.game_state[0][col] != 0)
+        column_full = self.game_state[0][col] != 0
+        if column_full:
+            self.board.play_sound(aww.mp3)
+
+        return column_full
 
     def check_win(self, col: int, row:int):
         #TODO: Check the game state to see if any player has won or if there is a draw
@@ -145,6 +145,7 @@ class ConnectFour:
         pass
 
     def show_winner(self):
+        self.board.play_sound(cheer,1)
         for i in range(4):
             same_color()
             time.sleep(.5)
