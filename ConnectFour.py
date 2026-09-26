@@ -72,17 +72,21 @@ class ConnectFour:
 
     def place_piece(self, col: int):
         #TODO: Finds the legal move in the column, and updates the game state to reflect the new piece, checking to see if a player has won with that new piece. Don't forget to play a sound!
-        row = self.find_lowest_empty_row(col)
-        if row != -1:
-            self.game_state[row][col] = self.current_player
-            self.board.play_sound("clack.mp3")
+        end_row = self.find_lowest_empty_row(col)
+        initial_row = 2
+        if end_row != -1:
+            self.game_state[initial_row][col] = self.current_player
+            for i in range(end_row-initial_row):
+                self.board.set_cell_color(col, end_row,self.current_player)
+                initial_row+=1
+                
             self.update_board_colors()
             game_over = self.check_win(col, row)
             print(game_over)
             self.switch_player()
         else:
-            pass
-        
+            NeoTrellis.play_sound(clack.mp3)
+        print(self.get_direction(col, row, 1, 0))
 
 
     def update_board_colors(self):
@@ -122,12 +126,8 @@ class ConnectFour:
                 self.board.set_cell_color(col, 0,self.player_two_color)
         self.board.update_display()
 
-
-
-
     def is_board_full(self):
         #TODO: Return whether or not the game state has no more legal moves
-        full = 0
         for col in range(NUM_COLS):
             if not is_column_full(col):
                 return False
@@ -142,6 +142,12 @@ class ConnectFour:
 
     def is_column_full(self, col: int):
         #TODO: Return if the given column is currently full
+        column_full = self.game_state[0][col] != 0
+        if column_full:
+            self.board.play_sound("aww.mp3")
+
+        return column_full
+
         return (self.game_state[0][col] != 0)
 
     def get_cell(self, col: int, row: int, vector: tuple[int,int]):
@@ -191,9 +197,6 @@ class ConnectFour:
         
 
     def show_winner(self):
-        print("\n\n\nWin")
-        print(self.get_player_color(self.current_player))
-        self.board.play_sound("cheer.mp3")
         for i in range(4):
             self.set_full_color(self.get_player_color(self.current_player))
             time.sleep(.5)
