@@ -74,7 +74,7 @@ class ConnectFour:
         end_row = self.find_lowest_empty_row(col)
         initial_row = 2
         if end_row != -1:
-            self.game_state[row][col] = self.current_player
+            self.game_state[initial_row][col] = self.current_player
             for i in range(end_row-initial_row):
                 self.board.set_cell_color(col, end_row,self.current_player)
                 initial_row+=1
