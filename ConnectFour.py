@@ -1,5 +1,5 @@
 import typing
-
+from Colors import *
 from NeoTrellisGame import NeoTrellisGame, AbstractNeoTrellisGame, Action
 from adafruit_neotrellis.multitrellis import MultiTrellis
 from adafruit_neotrellis.neotrellis import NeoTrellis
@@ -9,13 +9,14 @@ class ConnectFour:
         self.board = board if board is not None else NeoTrellisGame()
         super().__init__()
         self.game_state = [
+            [a,0,0,0,0,0,0],
             [0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0],
-        ] #TODO: Choose a structure to represent what pieces are currently in the game board
+        ] 
+        a=GREEN #TODO: Choose a structure to represent what pieces are currently in the game board
 
     def reset_game(self):
         #TODO reset the game state to its original empty state
