@@ -86,6 +86,7 @@ class ConnectFour:
             self.update_board_colors()
             self.board.play_sound("clack.mp3")
             self.check_win(col, end_row)
+            self.show_tie_game()
             self.switch_player()
         else:
             self.board.play_sound("err.mp3")
@@ -116,19 +117,23 @@ class ConnectFour:
     def show_current_player(self):
         # Shows the player's color at the top, turning the top pixel of full columns off.
         for col in range(NUM_COLS):
+            time.sleep(0.01)
             if self.is_column_full(col):
                 self.board.set_cell_color(col, 0,OFF)
+                self.board.update_display()
                 #self.board.activate_key(col,0, Action.BUTTON_PRESSED, False)
             elif self.current_player == 1:
                 self.board.set_cell_color(col, 0,self.player_one_color)
+                self.board.update_display()
             elif self.current_player == 2:
                 self.board.set_cell_color(col, 0,self.player_two_color)
-        self.board.update_display()
+                self.board.update_display()
+        
 
     def is_board_full(self):
         # Returns if the board is completely full
         for col in range(NUM_COLS):
-            if not is_column_full(col):
+            if not self.is_column_full(col):
                 return False
         return True
 
@@ -142,6 +147,9 @@ class ConnectFour:
     def is_column_full(self, col: int):
         # Returns whether or not the column is full
         column_full = self.game_state[0][col] != 0
+        if column_full:
+            self.board.play_sound("aww.mp3")
+
         return column_full
 
     def get_cell(self, col: int, row: int, vector: tuple[int,int]):
@@ -205,7 +213,16 @@ class ConnectFour:
                 self.board.set_cell_color(col, row, color)
 
     def show_tie_game(self):
-        #TODO: Display on the board that there was a draw
-        pass
+        if self.is_board_full() == True:
+            for _ in range(3):
+                self.set_full_color(RED)
+                time.sleep(.5)
+                self.set_full_color(OFF)
+                time.sleep(.5)
+                self.set_full_color(YELLOW)
+                time.sleep(.5)
+                self.set_full_color(OFF)
+                time.sleep(.5)
+
 
 
